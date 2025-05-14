@@ -1,34 +1,29 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { TopNavigation } from "@/layout/navigation/TopNavigation";
-import { SideNavigation } from "@/layout/navigation/SideNavigation";
+import type React from "react"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
+import { ThemeProvider } from "@/components/theme-provider"
+import { cn } from "@/lib/utils"
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
 export const metadata: Metadata = {
-  title: "AutoDev Workbench",
-  description: "AI-Powered AutoDevelopment Platform",
-};
+  title: "AI赋能的统一技术文档平台",
+  description: "为开发者提供智能、个性化的技术文档体验",
+}
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   return (
-    <html lang="zh">
-      <body className={inter.className}>
-        <div className="min-h-screen bg-white flex flex-col">
-          <TopNavigation />
-          <div className="flex flex-1">
-            <SideNavigation />
-            <main className="flex-1 overflow-auto">
-              {children}
-            </main>
-          </div>
-        </div>
+    <html lang="zh-CN" suppressHydrationWarning>
+      <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }
