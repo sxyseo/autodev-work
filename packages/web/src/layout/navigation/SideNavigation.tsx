@@ -14,66 +14,92 @@ import {
   ChevronRight,
   ChevronDown,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
-const navigationItems = [
-  {
-    name: 'AI 工具',
-    icon: Wrench,
-    items: [
-      { name: '自动开发驾驶舱', href: '/cockpit' },
-      { name: '后端应用生成', href: '/ai-tools/golden-path' },
-      { name: '前端 UI 页面', href: '/ai-tools/frontend' },
-    ],
-  },
-  {
-    name: '知识中枢',
-    icon: Brain,
-    items: [
-      { name: '平台上下文', href: '/knowledge/context' },
-      { name: '知识链接', href: '/knowledge/concept-linking' },
-    ],
-  },
-  {
-    name: '平台知识',
-    icon: Building2,
-    items: [
-      { name: '服务目录', href: '/platform/service-catalog' },
-      { name: '组件 & APIs', href: '/platform/framework' },
-      { name: '技术文档', href: '/platform/techdocs' },
-      { name: '规范中心', href: '/platform/coding-standards' },
-    ],
-  },
-  {
-    name: '智能中枢',
-    icon: Brain,
-    items: [
-      { name: '智能体', href: '/ai-hub/agents' },
-      { name: '项目规则', href: '/ai-hub/rules' },
-      { name: '向量知识库', href: '/ai-hub/vector-db' },
-    ],
-  },
-  {
-    name: '度量分析',
-    icon: BarChart3,
-    items: [
-      { name: '洞察分析', href: '/metrics/insights' },
-    ],
-  },
-  {
-    name: '文档中心',
-    icon: BookOpen,
-    items: [
-      { name: '快速开始', href: '/docs/quickstart' },
-      { name: 'API 文档', href: '/docs/api' },
-    ],
-  },
-];
+// 定义导航项的类型
+interface NavigationItem {
+  name: string;
+  href: string;
+}
+
+interface NavigationSection {
+  name: string;
+  icon: React.ElementType;
+  items: NavigationItem[];
+}
 
 export function SideNavigation() {
   const pathname = usePathname();
+  const t = useTranslations();
   const [collapsed, setCollapsed] = useState(false);
   // 默认所有菜单展开，将 null 改为 -1，表示全部展开
   const [expandedSection, setExpandedSection] = useState<number | null | -1>(-1);
+
+  // 获取当前语言
+  const currentLocale = pathname.split('/')[1] || 'zh';
+  
+  // 为路径添加当前语言前缀
+  const getLocalizedPath = (path: string): string => {
+    if (path === '/') {
+      return `/${currentLocale}`;
+    }
+    return `/${currentLocale}${path}`;
+  };
+
+  // 定义导航项
+  const navigationItems: NavigationSection[] = [
+    {
+      name: t('nav.aitools'),
+      icon: Wrench,
+      items: [
+        { name: '自动开发驾驶舱', href: '/cockpit' },
+        { name: '后端应用生成', href: '/ai-tools/golden-path' },
+        { name: '前端 UI 页面', href: '/ai-tools/frontend' },
+      ],
+    },
+    {
+      name: '知识中枢',
+      icon: Brain,
+      items: [
+        { name: '平台上下文', href: '/knowledge/context' },
+        { name: '知识链接', href: '/knowledge/concept-linking' },
+      ],
+    },
+    {
+      name: t('nav.platform'),
+      icon: Building2,
+      items: [
+        { name: '服务目录', href: '/platform/service-catalog' },
+        { name: '组件 & APIs', href: '/platform/framework' },
+        { name: '技术文档', href: '/platform/techdocs' },
+        { name: '规范中心', href: '/platform/coding-standards' },
+      ],
+    },
+    {
+      name: t('nav.aihub'),
+      icon: Brain,
+      items: [
+        { name: '智能体', href: '/ai-hub/agents' },
+        { name: '项目规则', href: '/ai-hub/rules' },
+        { name: '向量知识库', href: '/ai-hub/vector-db' },
+      ],
+    },
+    {
+      name: t('nav.metrics'),
+      icon: BarChart3,
+      items: [
+        { name: '洞察分析', href: '/metrics/insights' },
+      ],
+    },
+    {
+      name: '文档中心',
+      icon: BookOpen,
+      items: [
+        { name: '快速开始', href: '/docs/quickstart' },
+        { name: 'API 文档', href: '/docs/api' },
+      ],
+    },
+  ];
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
@@ -105,6 +131,28 @@ export function SideNavigation() {
     }
   };
 
+  // 判断路径是否匹配，需要考虑语言前缀和可能的路径重写
+  const isPathActive = (itemPath: string): boolean => {
+    const localizedPath = getLocalizedPath(itemPath);
+    
+    // 首先检查完全匹配
+    if (pathname === localizedPath) return true;
+    
+    // 去掉语言前缀的原始路径
+    const pathWithoutLocale = pathname.replace(new RegExp(`^/${currentLocale}`), '');
+    
+    // 检查非本地化路径是否匹配
+    if (pathWithoutLocale === itemPath) return true;
+    
+    // 检查是否是子路径
+    if (itemPath !== '/' && (
+      pathname.startsWith(localizedPath + '/') || 
+      pathWithoutLocale.startsWith(itemPath + '/')
+    )) return true;
+    
+    return false;
+  };
+
   return (
     <nav className={cn(
       "bg-white border-r border-gray-200 h-screen overflow-y-auto flex flex-col transition-all duration-300",
@@ -112,7 +160,7 @@ export function SideNavigation() {
     )}>
       <div className="flex-1 px-2 py-6">
         {navigationItems.map((section, sectionIndex) => {
-          const isSectionActive = section.items.some(item => pathname === item.href);
+          const isSectionActive = section.items.some(item => isPathActive(item.href));
           // 当 expandedSection 为 -1 时，所有菜单展开，或者当前菜单被选中
           const isExpanded = expandedSection === -1 || expandedSection === sectionIndex;
 
@@ -145,13 +193,13 @@ export function SideNavigation() {
 
               {!collapsed && isExpanded && (
                 <div className="ml-8 mt-1 space-y-1">
-                  {section &&section.items.map((item, itemIndex) => (
+                  {section && section.items.map((item, itemIndex) => (
                     <Link
                       key={itemIndex}
-                      href={item.href}
+                      href={getLocalizedPath(item.href)}
                       className={cn(
                         'block px-3 py-2 text-sm font-medium rounded-md',
-                        pathname === item.href
+                        isPathActive(item.href)
                           ? 'bg-gray-100 text-gray-900'
                           : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                       )}
