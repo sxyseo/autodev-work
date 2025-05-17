@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { TopNavigation } from "@/layout/navigation/TopNavigation";
-import { SideNavigation } from "@/layout/navigation/SideNavigation";
-import { AIAssistantWrapper } from "@/layout/AIAssistantWrapper";
-import { AIAssistantProvider } from "@/context/AIAssistantContext";
+import { defaultLocale } from '../../i18n';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,21 +15,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // 不再使用硬编码的重定向
+  // 由middleware处理根路径重定向
   return (
-    <html lang="zh">
+    <html>
       <body className={inter.className}>
-        <AIAssistantProvider>
-          <div className="min-h-screen bg-white flex flex-col">
-            <TopNavigation />
-            <div className="flex flex-1">
-              <SideNavigation />
-              <main className="flex-1 overflow-auto">
-                {children}
-              </main>
-            </div>
-            <AIAssistantWrapper />
-          </div>
-        </AIAssistantProvider>
+        {children}
       </body>
     </html>
   );

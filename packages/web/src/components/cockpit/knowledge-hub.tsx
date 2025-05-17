@@ -9,6 +9,7 @@ import { Upload, FileText, Book, Network, Plus, Loader2, Check, Info, Tag, Alert
 import { cn } from "@/lib/utils"
 import KnowledgeGraphPopup from "./knowledge-graph-popup"
 import { Checkbox } from "@/components/ui/checkbox"
+import { useTranslations } from 'next-intl'
 import {
   Tooltip,
   TooltipContent,
@@ -57,6 +58,7 @@ export default function KnowledgeHub({
   projectId,
   extractedKeywords = []
 }: KnowledgeHubProps) {
+  const t = useTranslations('cockpit.knowledge');
   const [showKnowledgeGraphPopup, setShowKnowledgeGraphPopup] = useState(false)
   const [glossaryTerms, setGlossaryTerms] = useState<ConceptDictionary[]>([])
   const [isLoadingGlossary, setIsLoadingGlossary] = useState(false)
@@ -87,14 +89,14 @@ export default function KnowledgeHub({
         const response = await fetch(url);
 
         if (!response.ok) {
-          throw new Error('获取词汇表失败');
+          throw new Error(t('errors.fetchGlossaryFailed'));
         }
 
         const data = await response.json();
         setGlossaryTerms(data);
       } catch (error) {
-        console.error('获取词汇表出错:', error);
-        setGlossaryError(error instanceof Error ? error.message : '未知错误');
+        console.error(t('errors.fetchGlossaryError'), error);
+        setGlossaryError(error instanceof Error ? error.message : t('errors.unknownError'));
       } finally {
         setIsLoadingGlossary(false);
       }
@@ -107,14 +109,14 @@ export default function KnowledgeHub({
         const response = await fetch('/api/guideline');
 
         if (!response.ok) {
-          throw new Error('获取规范失败');
+          throw new Error(t('errors.fetchGuidelinesFailed'));
         }
 
         const data = await response.json();
         setGuidelines(data);
       } catch (error) {
-        console.error('获取规范出错:', error);
-        setGuidelinesError(error instanceof Error ? error.message : '未知错误');
+        console.error(t('errors.fetchGuidelinesError'), error);
+        setGuidelinesError(error instanceof Error ? error.message : t('errors.unknownError'));
       } finally {
         setIsLoadingGuidelines(false);
       }
@@ -122,7 +124,7 @@ export default function KnowledgeHub({
 
     fetchGlossaryTerms();
     fetchGuidelines();
-  }, [projectId]);
+  }, [projectId, t]);
 
   useEffect(() => {
     if (extractedKeywords.length > 0 && glossaryTerms.length > 0) {
@@ -160,7 +162,7 @@ export default function KnowledgeHub({
       });
 
       if (!response.ok) {
-        throw new Error('验证关键词失败');
+        throw new Error(t('errors.validateKeywordsFailed'));
       }
 
       const data = await response.json();
@@ -176,11 +178,11 @@ export default function KnowledgeHub({
         setAiVerifiedMatches(matchedKeywords);
       }
     } catch (error) {
-      console.error('验证关键词出错:', error);
+      console.error(t('errors.validateKeywordsError'), error);
       setValidationResults({
         success: false,
-        message: '验证失败',
-        error: error instanceof Error ? error.message : '未知错误'
+        message: t('validation.failed'),
+        error: error instanceof Error ? error.message : t('errors.unknownError')
       });
       // 验证失败时清空AI验证的匹配词
       setAiVerifiedMatches([]);
@@ -261,8 +263,8 @@ export default function KnowledgeHub({
   return (
     <div className="bg-white border-r border-gray-200 flex flex-col h-full">
       <div className="px-4 py-2 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-800">情境与知识中心</h2>
-        <p className="text-xs text-gray-500">管理和浏览项目相关知识</p>
+        <h2 className="text-lg font-semibold text-gray-800">{t('title')}</h2>
+        <p className="text-xs text-gray-500">{t('subtitle')}</p>
       </div>
 
       <div className="flex-1 flex flex-col">
@@ -270,7 +272,7 @@ export default function KnowledgeHub({
         <div className="border-b border-gray-200">
           <div className="px-4 py-2 flex justify-between items-center border-b">
             <div className="flex items-center gap-1">
-              <h3 className="text-sm font-semibold text-gray-700">显性知识</h3>
+              <h3 className="text-sm font-semibold text-gray-700">{t('explicit.title')}</h3>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -279,7 +281,7 @@ export default function KnowledgeHub({
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p className="text-xs">MCP 工具正在开发中</p>
+                    <p className="text-xs">{t('tooltip.development')}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -288,12 +290,12 @@ export default function KnowledgeHub({
               {selectedGuidelines.length > 0 && (
                 <Button variant="outline" size="sm" className="text-xs">
                   <Check className="h-3 w-3 mr-1" />
-                  应用选中 ({selectedGuidelines.length})
+                  {t('buttons.applySelected', { count: selectedGuidelines.length })}
                 </Button>
               )}
               <Button variant="outline" size="sm" className="text-xs">
                 <Upload className="h-3 w-3 mr-1" />
-                上传文档
+                {t('buttons.uploadDoc')}
               </Button>
             </div>
           </div>
@@ -306,11 +308,11 @@ export default function KnowledgeHub({
                 </div>
               ) : guidelinesError ? (
                 <div className="text-xs text-red-500 p-2">
-                  获取规范出错: {guidelinesError}
+                  {t('errors.guidelinesError')}: {guidelinesError}
                 </div>
               ) : guidelines.length === 0 ? (
                 <div className="text-xs text-gray-500 p-2">
-                  暂无规范数据
+                  {t('empty.guidelines')}
                 </div>
               ) : (
                 guidelines.map((guideline) => (
@@ -348,7 +350,7 @@ export default function KnowledgeHub({
                       onClick={() => onSourceSelect(guideline.id === activeSource ? null : guideline.id)}
                     >
                       <p className="text-xs text-gray-600">{guideline.description}</p>
-                      <p className="text-[10px] text-gray-400 mt-1">更新于: {guideline.lastUpdated}</p>
+                      <p className="text-[10px] text-gray-400 mt-1">{t('labels.updated')}: {guideline.lastUpdated}</p>
                     </CardContent>
                   </Card>
                 ))
@@ -360,7 +362,7 @@ export default function KnowledgeHub({
         <div>
           <div className="px-4 py-2 border-b">
             <div className="flex items-center gap-1">
-              <h3 className="text-sm font-semibold text-gray-700">隐性知识</h3>
+              <h3 className="text-sm font-semibold text-gray-700">{t('implicit.title')}</h3>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -369,7 +371,7 @@ export default function KnowledgeHub({
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p className="text-xs">MCP 工具正在开发中</p>
+                    <p className="text-xs">{t('tooltip.development')}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -383,17 +385,17 @@ export default function KnowledgeHub({
                   <CardHeader className="p-3 pb-0">
                     <CardTitle className="text-sm font-medium">{item.title}</CardTitle>
                     <Badge variant="secondary" className="text-[10px] h-4 w-fit">
-                      来源: {item.source}
+                      {t('labels.source')}: {item.source}
                     </Badge>
                   </CardHeader>
                   <CardContent className="p-3 pt-2">
                     <p className="text-xs text-gray-600">{item.insight}</p>
                     <div className="flex justify-end mt-1 gap-1">
                       <Button variant="ghost" size="sm" className="h-6 text-[10px]">
-                        确认
+                        {t('buttons.confirm')}
                       </Button>
                       <Button variant="ghost" size="sm" className="h-6 text-[10px]">
-                        标记相关
+                        {t('buttons.markRelated')}
                       </Button>
                     </div>
                   </CardContent>
@@ -408,7 +410,7 @@ export default function KnowledgeHub({
       {extractedKeywords.length > 0 && (
         <div className="border-t border-gray-200 p-3">
           <div className="flex justify-between items-center mb-2">
-            <h3 className="text-sm font-semibold text-gray-700">提取的关键词</h3>
+            <h3 className="text-sm font-semibold text-gray-700">{t('keywords.title')}</h3>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -417,7 +419,7 @@ export default function KnowledgeHub({
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p className="text-xs">从需求文本中自动提取的关键词</p>
+                  <p className="text-xs">{t('tooltip.autoExtract')}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -455,18 +457,18 @@ export default function KnowledgeHub({
                     <TooltipContent>
                       {isAiVerified && matchingTerm?.termChinese ? (
                         <div className="text-xs max-w-60">
-                          <p className="font-medium text-purple-800">AI 验证匹配:</p>
+                          <p className="font-medium text-purple-800">{t('tooltip.aiVerified')}:</p>
                           <p>{matchingTerm?.termChinese} ({matchingTerm?.termEnglish})</p>
                           <p className="text-gray-500 mt-1">{matchingTerm?.descChinese}</p>
                         </div>
                       ) : isMatched ? (
                         <div className="text-xs max-w-60">
-                          <p className="font-medium">已在词汇表中找到匹配:</p>
+                          <p className="font-medium">{t('tooltip.matched')}:</p>
                           <p>{matchingTerm?.termChinese} ({matchingTerm?.termEnglish})</p>
                           <p className="text-gray-500 mt-1">{matchingTerm?.descChinese}</p>
                         </div>
                       ) : (
-                        <p className="text-xs">未在当前词汇表中找到匹配</p>
+                        <p className="text-xs">{t('tooltip.noMatch')}</p>
                       )}
                     </TooltipContent>
                   </Tooltip>
@@ -485,34 +487,34 @@ export default function KnowledgeHub({
               {isValidatingKeywords ? (
                 <>
                   <Loader2 className="h-3 w-3 mr-1 animate-spin" />
-                  验证中
+                  {t('buttons.validating')}
                 </>
               ) : validationResults?.success ? (
                 <>
                   <Check className="h-3 w-3 mr-1" />
-                  重新验证
+                  {t('buttons.revalidate')}
                 </>
               ) : (
                 <>
                   <AlertCircle className="h-3 w-3 mr-1" />
-                  智能验证
+                  {t('buttons.smartValidate')}
                 </>
               )}
             </Button>
             <Button variant="outline" size="sm" className="text-xs">
-              添加到词汇表
+              {t('buttons.addToGlossary')}
             </Button>
           </div>
 
           {validationResults && (
             <div className="mt-2 p-2 border rounded bg-gray-50 text-xs">
-              <div className="font-medium mb-1">验证结果:</div>
+              <div className="font-medium mb-1">{t('validation.title')}:</div>
               <div className={validationResults.success ? "text-green-600" : "text-red-600"}>
-                {validationResults.message || "完成关键词验证"}
+                {validationResults.message || t('validation.complete')}
               </div>
               {validationResults.suggestions && (
                 <div className="mt-1">
-                  <span className="font-medium">建议:</span> {validationResults.suggestions}
+                  <span className="font-medium">{t('validation.suggestions')}:</span> {validationResults.suggestions}
                 </div>
               )}
             </div>
@@ -523,7 +525,7 @@ export default function KnowledgeHub({
       {/* 项目词汇表部分 - 确保未匹配项保持原始颜色 */}
       <div className="border-t border-gray-200 p-3">
         <div className="flex justify-between items-center mb-2">
-          <h3 className="text-sm font-medium text-gray-700">项目词汇表</h3>
+          <h3 className="text-sm font-medium text-gray-700">{t('glossary.title')}</h3>
           <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
             <Plus className="h-3 w-3" />
           </Button>
@@ -535,11 +537,11 @@ export default function KnowledgeHub({
             </div>
           ) : glossaryError ? (
             <div className="text-xs text-red-500 p-2">
-              获取词汇表出错: {glossaryError}
+              {t('errors.glossaryError')}: {glossaryError}
             </div>
           ) : glossaryTerms.length === 0 ? (
             <div className="text-xs text-gray-500 p-2">
-              暂无词汇表数据
+              {t('empty.glossary')}
             </div>
           ) : (
             <div className="space-y-1">
@@ -587,7 +589,7 @@ export default function KnowledgeHub({
                         <TooltipContent>
                           <div className="text-xs max-w-60">
                             <p className={`font-medium ${isAiVerified ? "text-purple-800" : ""}`}>
-                              {isAiVerified ? "AI验证匹配的关键词:" : "匹配关键词:"}
+                              {isAiVerified ? t('tooltip.aiVerifiedMatch') : t('tooltip.matchedKeywords')}:
                             </p>
                             <div className="flex flex-wrap gap-1 mt-1">
                               {matchingKeywords.map((keyword, i) => (
@@ -617,7 +619,7 @@ export default function KnowledgeHub({
 
       <div className="border-t border-gray-200 p-3">
         <div className="flex justify-between items-center">
-          <h3 className="text-sm font-medium text-gray-700">知识图谱浏览器</h3>
+          <h3 className="text-sm font-medium text-gray-700">{t('graph.title')}</h3>
           <Button
             variant="outline"
             size="sm"
@@ -625,7 +627,7 @@ export default function KnowledgeHub({
             onClick={() => setShowKnowledgeGraphPopup(true)}
           >
             <Network className="h-3 w-3 mr-1" />
-            查看
+            {t('buttons.view')}
           </Button>
         </div>
       </div>

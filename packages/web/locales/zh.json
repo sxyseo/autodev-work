@@ -1,0 +1,128 @@
+{
+  "nav": {
+    "cockpit": "驾驶舱",
+    "platform": "平台知识",
+    "aihub": "智能中枢",
+    "aitools": "AI 工具",
+    "metrics": "度量分析",
+    "search": "搜索",
+    "aiassistant": "AI助手",
+    "brand": "AutoDev"
+  },
+  "home": {
+    "selected": "已选择：{section}",
+    "userTouchpoint": "用户触点：AI 增强的自服务",
+    "lowCode": "低代码系统，快速 UI/原型构建",
+    "aiTemplate": "AI 赋能模板应用，终端用户产品",
+    "lowCodeEnhance": "低代码强化生成",
+    "aiTemplateEnhance": "AI 增强模板生成",
+    "middleLayer": "中间层：知识与上下文中枢",
+    "connect": "连接用户和内部开发者，聚合知识与分发知识",
+    "qaDevops": "支持问答、DevOps任务协同",
+    "knowledgeHub": "知识与上下文中枢",
+    "internalApi": "内部接口：标准化 API 提供上下文",
+    "editorApi": "提供编辑器、代码库等内部 API",
+    "infra": "平台基础设施与数据处理能力",
+    "standardApi": "标准化\"智能 API\"",
+    "aiGovernance": "智能体治理中枢",
+    "governanceStrategy": "集中治理策略",
+    "permission": "权限管理",
+    "contextInject": "上下文注入",
+    "audit": "统一审计",
+    "resource": "资源编排",
+    "idp": "IDP 作为智能治理中枢",
+    "aiMetrics": "度量 AI 质量与生产力",
+    "modelEval": "模型效果评估",
+    "response": "响应速度与准确率",
+    "usage": "使用频率与覆盖率",
+    "productivity": "生产效率提升指标",
+    "improve": "度量改善 AI 生成质量"
+  },
+  "section": {
+    "lowcode": "低代码强化生成",
+    "aitemplate": "AI 增强模板生成",
+    "knowledgehub": "知识与上下文中枢",
+    "platformapi": "标准化\"智能 API\"",
+    "idpgovernance": "IDP 作为智能治理中枢",
+    "metrics": "度量改善 AI 生成质量"
+  },
+  
+  "cockpit": {
+    "systemPrompt1": "你是一位专业的需求分析师，专门帮助用户分析和完善软件需求。",
+    "systemPrompt2": "你的任务是通过提问帮助用户明确需求，并将讨论内容整理为结构化的需求文档。",
+    "systemPrompt3": "回答时，你需要：\n1. 提出有价值的问题，帮助用户思考需求的各个方面\n2. 根据对话内容，自动识别并提取关键需求点\n3. 保持专业、友好的态度，引导用户考虑完整的需求场景\n",
+    "systemPrompt4": "如果用户的需求描述不够清晰，请主动询问细节。",
+    "error": {
+      "aiResponseFailed": "获取 AI 回复失败",
+      "aiResponseError": "获取 AI 回复时出错:",
+      "handleAIResponseError": "处理 AI 响应时出错:",
+      "qualityCheckFailed": "质量检查 API 调用失败",
+      "qualityCheckApiError": "质量检查 API 返回错误:",
+      "qualityCheckError": "质量检查时出错:",
+      "updateDocError": "更新文档时出错:",
+      "qualityCheckExecError": "执行质量检查时出错:"
+    },
+    "requirements": {
+      "defaultRequirement": "我需要一个会议室预订系统，支持用户通过手机查看可用会议室，预订会议时段，设置会议提醒，并能邀请其他参会者。系统需要防止会议室冲突，并提供简单的管理界面。",
+      "title": "自动开发驾驶舱",
+      "subtitle": "与 AI 助手协作定义、完善和实现您的需求",
+      "tab": {
+        "conversation": "对话流",
+        "document": "需求文档"
+      },
+      "empty": {
+        "conversation1": "请在下方输入您的需求描述开始对话",
+        "conversation2": "提示：使用清晰、具体的语言描述您的需求",
+        "document1": "暂无需求文档",
+        "document2": "在对话中点击\"生成需求文档\"按钮来创建"
+      },
+      "input": {
+        "tip": "请描述您的核心需求或意图",
+        "placeholder": {
+          "example": "例如：我需要一个会议室预订系统，支持用户通过手机查看可用会议室，预订会议时段，设置会议提醒，并能邀请其他参会者。系统需要防止会议室冲突，并提供简单的管理界面。",
+          "reply": "输入您的回复..."
+        }
+      },
+      "edit": {
+        "title": "编辑文档内容",
+        "cancel": "取消",
+        "save": "保存修改",
+        "placeholder": "在此编辑需求文档内容..."
+      },
+      "doc": {
+        "title": "需求文档",
+        "edit": "编辑",
+        "updating": "更新中...",
+        "generate": "生成需求文档",
+        "checking": "检查中...",
+        "qualityCheck": "质量检查"
+      }
+    },
+    "assistant": {
+      "title": "AI 助手与行动面板",
+      "subtitle": "AI 提问、建议与质量保证",
+      "suggestions": "AI 提问与建议",
+      "quality": "实时质量保证", 
+      "buttons": {
+        "ignore": "忽略",
+        "accept": "采纳"
+      },
+      "alerts": {
+        "ambiguity": "模糊性",
+        "testability": "可测试性",
+        "inconsistency": "不一致性",
+        "incompleteness": "不完整性"
+      }
+    },
+    "knowledge": {
+      "errors": {
+        "fetchGlossaryFailed": "获取词汇表失败",
+        "fetchGlossaryError": "获取词汇表出错:",
+        "unknownError": "未知错误",
+        "fetchGuidelinesFailed": "获取规范失败",
+        "fetchGuidelinesError": "获取规范出错:",
+        "validateKeywordsFailed": "验证关键词失败"
+      }
+    }
+  }
+} 

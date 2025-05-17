@@ -6,8 +6,10 @@ import RequirementsWorkspace from "@/components/cockpit/requirements-workspace"
 import KnowledgeHub from "@/components/cockpit/knowledge-hub"
 import AIAssistantPanel from "@/components/cockpit/ai-assistant-panel"
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels"
+import { useTranslations } from 'next-intl'
 
 export default function Home() {
+	const t = useTranslations('cockpit')
 	const [currentRequirement, setCurrentRequirement] = useState("")
 	const [conversation, setConversation] = useState<Array<{ role: string; content: string }>>([])
 	const [documentContent, setDocumentContent] = useState<Array<{ id: string; type: string; content: string }>>([])
@@ -24,13 +26,10 @@ export default function Home() {
 
 	// 为需求对话添加系统提示词
 	const requirementSystemPrompt =
-		"你是一位专业的需求分析师，专门帮助用户分析和完善软件需求。" +
-		"你的任务是通过提问帮助用户明确需求，并将讨论内容整理为结构化的需求文档。" +
-		"回答时，你需要：\n" +
-		"1. 提出有价值的问题，帮助用户思考需求的各个方面\n" +
-		"2. 根据对话内容，自动识别并提取关键需求点\n" +
-		"3. 保持专业、友好的态度，引导用户考虑完整的需求场景\n" +
-		"如果用户的需求描述不够清晰，请主动询问细节。"
+		t('systemPrompt1') +
+		t('systemPrompt2') +
+		t('systemPrompt3') +
+		t('systemPrompt4')
 
 	const handleSendMessage = async (message: string) => {
 		const newConversation = [...conversation, { role: "user", content: message }]
@@ -57,7 +56,7 @@ export default function Home() {
 			})
 
 			if (!response.ok) {
-				throw new Error("获取 AI 回复失败")
+				throw new Error(t('error.aiResponseFailed'))
 			}
 
 			let aiResponse = ''
@@ -86,7 +85,7 @@ export default function Home() {
 
 			handleAIResponse(aiResponse, newConversation.length)
 		} catch (error) {
-			console.error("获取 AI 回复时出错:", error)
+			console.error(t('error.aiResponseError'), error)
 		} finally {
 			setIsLoading(false)
 		}
@@ -124,7 +123,7 @@ export default function Home() {
 			}
 			// 注意：后续对话不再自动更新文档和执行质量检查
 		} catch (error) {
-			console.error("处理 AI 响应时出错:", error);
+			console.error(t('error.handleAIResponseError'), error);
 		}
 	}
 
@@ -146,7 +145,7 @@ export default function Home() {
 			})
 
 			if (!response.ok) {
-				throw new Error("质量检查 API 调用失败")
+				throw new Error(t('error.qualityCheckFailed'))
 			}
 
 			const data = await response.json()
@@ -155,10 +154,10 @@ export default function Home() {
 			if (data.qualityIssues && Array.isArray(data.qualityIssues)) {
 				setQualityAlerts(data.qualityIssues)
 			} else if (data.error) {
-				console.error("质量检查 API 返回错误:", data.error)
+				console.error(t('error.qualityCheckApiError'), data.error)
 			}
 		} catch (error) {
-			console.error("质量检查时出错:", error)
+			console.error(t('error.qualityCheckError'), error)
 		} finally {
 			setIsQualityChecking(false)
 		}
@@ -221,7 +220,7 @@ export default function Home() {
 				});
 			}
 		} catch (error) {
-			console.error("更新文档时出错:", error);
+			console.error(t('error.updateDocError'), error);
 		} finally {
 			setIsDocumentUpdating(false);
 		}
@@ -235,7 +234,7 @@ export default function Home() {
 		try {
 			await performQualityCheck();
 		} catch (error) {
-			console.error("执行质量检查时出错:", error);
+			console.error(t('error.qualityCheckExecError'), error);
 		} finally {
 			setIsQualityChecking(false);
 		}

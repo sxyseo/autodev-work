@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { AlertTriangle, HelpCircle, Star } from "lucide-react"
+import { useTranslations } from 'next-intl'
 
 interface QualityAlert {
   id: string
@@ -19,6 +20,8 @@ interface AIAssistantPanelProps {
 }
 
 export default function AIAssistantPanel({ qualityAlerts, onAlertClick }: AIAssistantPanelProps) {
+  const t = useTranslations('cockpit.assistant');
+  
   const suggestions = [
     {
       id: "sug-1",
@@ -35,13 +38,13 @@ export default function AIAssistantPanel({ qualityAlerts, onAlertClick }: AIAssi
   return (
     <div className="bg-white border-l border-gray-200 flex flex-col h-full">
       <div className="px-4 py-2 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-800">AI 助手与行动面板</h2>
-        <p className="text-xs text-gray-500">AI 提问、建议与质量保证</p>
+        <h2 className="text-lg font-semibold text-gray-800">{t('title')}</h2>
+        <p className="text-xs text-gray-500">{t('subtitle')}</p>
       </div>
 
       {/* AI Questions & Suggestions */}
       <div className="p-3 border-b border-gray-200">
-        <h3 className="text-sm font-medium text-gray-700 mb-2">AI 提问与建议</h3>
+        <h3 className="text-sm font-medium text-gray-700 mb-2">{t('suggestions')}</h3>
         <ScrollArea className="h-48">
           <div className="space-y-2">
             {suggestions.map((suggestion) => (
@@ -64,10 +67,10 @@ export default function AIAssistantPanel({ qualityAlerts, onAlertClick }: AIAssi
                         </div>
                         <div className="flex gap-1">
                           <Button variant="ghost" size="sm" className="h-6 text-[10px]">
-                            忽略
+                            {t('buttons.ignore')}
                           </Button>
                           <Button size="sm" className="h-6 text-[10px]">
-                            采纳
+                            {t('buttons.accept')}
                           </Button>
                         </div>
                       </div>
@@ -81,7 +84,7 @@ export default function AIAssistantPanel({ qualityAlerts, onAlertClick }: AIAssi
       </div>
 
       <div className="p-3">
-        <h3 className="text-sm font-medium text-gray-700 mb-2">实时质量保证</h3>
+        <h3 className="text-sm font-medium text-gray-700 mb-2">{t('quality')}</h3>
         <ScrollArea className="min-h-48">
           <div className="space-y-2">
             {qualityAlerts.map((alert) => (
@@ -106,12 +109,12 @@ export default function AIAssistantPanel({ qualityAlerts, onAlertClick }: AIAssi
                           }`}
                         >
                           {alert.type === "ambiguity"
-                            ? "模糊性"
+                            ? t('alerts.ambiguity')
                             : alert.type === "testability"
-                              ? "可测试性"
+                              ? t('alerts.testability')
                               : alert.type === "inconsistency"
-                                ? "不一致性"
-                                : "不完整性"}
+                                ? t('alerts.inconsistency')
+                                : t('alerts.incompleteness')}
                         </Badge>
                       </div>
                       <p className="text-xs text-gray-800">{alert.message}</p>

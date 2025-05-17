@@ -11,6 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 import InputWithSend from "@/components/shared/input-with-send"
 import GenifyMarkdownRender from "@/components/markdown/GenifyMarkdownRender";
+import { useTranslations } from 'next-intl';
 
 // Default example requirement with rich context
 const DEFAULT_REQUIREMENT = "我需要一个会议室预订系统，支持用户通过手机查看可用会议室，预订会议时段，设置会议提醒，并能邀请其他参会者。系统需要防止会议室冲突，并提供简单的管理界面。";
@@ -49,6 +50,7 @@ export default function RequirementsWorkspace({
 	const [editContent, setEditContent] = useState("")
 	const [isAnalyzing, setIsAnalyzing] = useState(false)
 	const messagesEndRef = useRef<HTMLDivElement>(null)
+	const t = useTranslations('cockpit.requirements');
 
 	// Set default requirement if empty and conversation is empty
 	useEffect(() => {
@@ -124,14 +126,17 @@ export default function RequirementsWorkspace({
 		}
 	}
 
+	// DEFAULT_REQUIREMENT 国际化
+	const DEFAULT_REQUIREMENT = t('defaultRequirement');
+
 	return (
 		<div className="flex-1 flex flex-col h-full border-l border-r border-gray-200">
 			{/* Header */}
 			<div className="px-4 py-2 border-b border-gray-200 bg-white">
 				<div className="flex justify-between items-center">
 					<div>
-						<h1 className="text-xl font-semibold text-gray-800">自动开发驾驶舱</h1>
-						<p className="text-sm text-gray-500">与 AI 助手协作定义、完善和实现您的需求</p>
+						<h1 className="text-xl font-semibold text-gray-800">{t('title')}</h1>
+						<p className="text-sm text-gray-500">{t('subtitle')}</p>
 					</div>
 					<div className="flex items-center space-x-2 bg-gray-100 p-1 rounded-lg">
 						<div
@@ -139,14 +144,14 @@ export default function RequirementsWorkspace({
 							onClick={() => setActiveTab("conversation")}
 						>
 							<MessageSquare className="h-4 w-4 mr-2"/>
-							<span className="text-sm font-medium">对话流</span>
+							<span className="text-sm font-medium">{t('tab.conversation')}</span>
 						</div>
 						<div
 							className={`flex items-center px-3 py-1.5 rounded cursor-pointer ${activeTab === "document" ? "bg-white shadow-sm" : "text-gray-500 hover:text-gray-700"}`}
 							onClick={() => setActiveTab("document")}
 						>
 							<FileText className="h-4 w-4 mr-2"/>
-							<span className="text-sm font-medium">需求文档</span>
+							<span className="text-sm font-medium">{t('tab.document')}</span>
 						</div>
 					</div>
 				</div>
@@ -160,8 +165,8 @@ export default function RequirementsWorkspace({
 								{conversation.length === 0 && (
 									<div className="flex justify-center items-center h-40 text-gray-500">
 										<div className="text-center">
-											<p className="mb-2">请在下方输入您的需求描述开始对话</p>
-											<p className="text-xs">提示：使用清晰、具体的语言描述您的需求</p>
+											<p className="mb-2">{t('empty.conversation1')}</p>
+											<p className="text-xs">{t('empty.conversation2')}</p>
 										</div>
 									</div>
 								)}
@@ -190,12 +195,12 @@ export default function RequirementsWorkspace({
 														<>
 															<span
 																className="h-3 w-3 mr-1 animate-spin rounded-full border-2 border-gray-200 border-t-blue-600"/>
-															更新中...
+																{t('doc.updating')}
 														</>
 													) : (
 														<>
 															<FileText className="h-3 w-3 mr-1"/>
-															生成需求文档
+															{t('doc.generate')}
 														</>
 													)}
 												</Button>
@@ -210,7 +215,7 @@ export default function RequirementsWorkspace({
 														<>
 															<span
 																className="h-3 w-3 mr-1 animate-spin rounded-full border-2 border-gray-200 border-t-blue-600"/>
-															检查中...
+																{t('doc.checking')}
 														</>
 													) : (
 														<>
@@ -221,7 +226,7 @@ export default function RequirementsWorkspace({
 																<path d="M13.9 17.25 16 15.5l2.1 1.75"/>
 																<path d="m16 15.5-4.6 3.86L9 18"/>
 															</svg>
-															质量检查
+																{t('doc.qualityCheck')}
 														</>
 													)}
 												</Button>
@@ -236,7 +241,7 @@ export default function RequirementsWorkspace({
 
 					<div className="p-4 border-t border-gray-200 bg-white">
 						<div className={conversation.length === 0 ? "mb-2 text-sm font-medium text-gray-700" : "hidden"}>
-							请描述您的核心需求或意图
+							{t('input.tip')}
 						</div>
 						<InputWithSend
 							value={currentRequirement}
@@ -249,9 +254,7 @@ export default function RequirementsWorkspace({
 							minHeight={conversation.length === 0 ? "100px" : "80px"}
 							onKeyDown={handleKeyDown}
 							onKeywordsExtracted={onKeywordsExtracted} // 添加关键词提取回调
-							placeholder={conversation.length === 0
-								? "例如：我需要一个会议室预订系统，支持用户通过手机查看可用会议室，预订会议时段，设置会议提醒，并能邀请其他参会者。系统需要防止会议室冲突，并提供简单的管理界面。"
-								: "输入您的回复..."}
+							placeholder={conversation.length === 0 ? t('input.placeholder.example') : t('input.placeholder.reply')}
 						/>
 					</div>
 				</div>
@@ -262,8 +265,8 @@ export default function RequirementsWorkspace({
 							{documentContent && documentContent.length === 0 ? (
 								<div className="flex justify-center items-center h-40 text-gray-500">
 									<div className="text-center">
-										<p className="mb-2">暂无需求文档</p>
-										<p className="text-xs">在对话中点击&#34;生成需求文档&#34;按钮来创建</p>
+										<p className="mb-2">{t('empty.document1')}</p>
+										<p className="text-xs">{t('empty.document2')}</p>
 									</div>
 								</div>
 							) : (
@@ -279,23 +282,19 @@ export default function RequirementsWorkspace({
 																<path strokeLinecap="round" strokeLinejoin="round"
 																      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
 															</svg>
-															编辑文档内容
+																{t('edit.title')}
 														</div>
 														<div className="flex gap-2">
 															<Button variant="outline" size="sm" onClick={() => setEditingId(null)}
-															        className="hover:bg-gray-100">
-																取消
-															</Button>
-															<Button size="sm" onClick={saveEdit} className="bg-blue-600 hover:bg-blue-700 text-white">
-																保存修改
-															</Button>
+															        className="hover:bg-gray-100">{t('edit.cancel')}</Button>
+															<Button size="sm" onClick={saveEdit} className="bg-blue-600 hover:bg-blue-700 text-white">{t('edit.save')}</Button>
 														</div>
 													</div>
 													<Textarea
 														value={editContent}
 														onChange={(e) => setEditContent(e.target.value)}
 														className="min-h-[250px] font-mono text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md shadow-sm"
-														placeholder="在此编辑需求文档内容..."
+														placeholder={t('edit.placeholder')}
 													/>
 												</div>
 											) : (
@@ -307,7 +306,7 @@ export default function RequirementsWorkspace({
 																<path strokeLinecap="round" strokeLinejoin="round"
 																      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
 															</svg>
-															需求文档
+																{t('doc.title')}
 														</div>
 														<Button
 															variant="ghost"
@@ -320,7 +319,7 @@ export default function RequirementsWorkspace({
 																<path strokeLinecap="round" strokeLinejoin="round"
 																      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
 															</svg>
-															编辑
+																{t('doc.edit')}
 														</Button>
 													</div>
 													<div

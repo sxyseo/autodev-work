@@ -42,3 +42,7 @@ next-env.d.ts
 .idea/*
 node_modules/
 .next/*
+/venv/
+/tools/
+/memory-bank/
+/requirements.txt

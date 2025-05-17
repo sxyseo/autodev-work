@@ -1,0 +1,127 @@
+{
+  "nav": {
+    "cockpit": "Cockpit",
+    "platform": "Platform Knowledge",
+    "aiHub": "AI Hub",
+    "aiTools": "AI Tools",
+    "metrics": "Metrics",
+    "search": "Search",
+    "aiAssistant": "AI Assistant"
+  },
+  "brand": "AutoDev",
+  "home": {
+    "selected": "Selected: {section}",
+    "userTouchpoint": "User Touchpoint: AI Enhanced Self-Service",
+    "lowCode": "Low-code Systems, Rapid UI/Prototype Building",
+    "aiTemplate": "AI-powered Template Apps, End-user Products",
+    "lowCodeEnhance": "Low-code Enhanced Generation",
+    "aiTemplateEnhance": "AI Enhanced Template Generation",
+    "middleLayer": "Middle Layer: Knowledge & Context Hub",
+    "connect": "Connecting Users and Internal Developers, Aggregating and Distributing Knowledge",
+    "qaDevops": "Supporting Q&A, DevOps Task Collaboration",
+    "knowledgeHub": "Knowledge & Context Hub",
+    "internalApi": "Internal Interface: Standardized API Providing Context",
+    "editorApi": "Providing Editor, Code Base and Other Internal APIs",
+    "infra": "Platform Infrastructure and Data Processing Capabilities",
+    "standardApi": "Standardized \"Smart API\"",
+    "aiGovernance": "Intelligent Agent Governance Hub",
+    "governanceStrategy": "Centralized Governance Strategy",
+    "permission": "Permission Management",
+    "contextInject": "Context Injection",
+    "audit": "Unified Audit",
+    "resource": "Resource Orchestration",
+    "idp": "IDP as Intelligent Governance Hub",
+    "aiMetrics": "Measuring AI Quality and Productivity",
+    "modelEval": "Model Effect Evaluation",
+    "response": "Response Speed and Accuracy",
+    "usage": "Usage Frequency and Coverage",
+    "productivity": "Productivity Improvement Metrics",
+    "improve": "Metrics Improve AI Generation Quality"
+  },
+  "nav.language": "Language",
+  "section.lowcode": "Low-code Generation",
+  "section.aitemplate": "AI Template Generation",
+  "section.knowledgehub": "Knowledge & Context Hub",
+  "section.platformapi": "Standardized 'Smart API'",
+  "section.idpgovernance": "IDP as Governance Hub",
+  "section.metrics": "Improve AI Generation Quality",
+  
+  "cockpit": {
+    "systemPrompt1": "You are a professional requirements analyst specialized in helping users analyze and refine software requirements.",
+    "systemPrompt2": "Your task is to help users clarify requirements through questions and organize discussion content into structured requirement documents.",
+    "systemPrompt3": "When answering, you need to:\n1. Ask valuable questions to help users consider various aspects of requirements\n2. Automatically identify and extract key requirement points from the conversation\n3. Maintain a professional and friendly attitude, guiding users to consider complete requirement scenarios\n",
+    "systemPrompt4": "If user's requirement description is not clear enough, proactively ask for details.",
+    "error": {
+      "aiResponseFailed": "Failed to get AI response",
+      "aiResponseError": "Error getting AI response:",
+      "handleAIResponseError": "Error handling AI response:",
+      "qualityCheckFailed": "Quality check API call failed",
+      "qualityCheckApiError": "Quality check API returned error:",
+      "qualityCheckError": "Error during quality check:",
+      "updateDocError": "Error updating document:",
+      "qualityCheckExecError": "Error executing quality check:"
+    },
+    "requirements": {
+      "defaultRequirement": "I need a meeting room booking system that allows users to view available meeting rooms via mobile, book time slots, set meeting reminders, and invite other participants. The system should prevent meeting room conflicts and provide a simple management interface.",
+      "title": "AutoDev Cockpit",
+      "subtitle": "Collaborate with AI assistant to define, refine and implement your requirements",
+      "tab": {
+        "conversation": "Conversation",
+        "document": "Requirements Doc"
+      },
+      "empty": {
+        "conversation1": "Enter your requirement description below to start a conversation",
+        "conversation2": "Tip: Use clear, specific language to describe your requirements",
+        "document1": "No requirement document yet",
+        "document2": "Click \"Generate Requirements Doc\" button in the conversation to create one"
+      },
+      "input": {
+        "tip": "Please describe your core requirement or intent",
+        "placeholder": {
+          "example": "Example: I need a meeting room booking system that allows users to view available meeting rooms via mobile, book time slots, set meeting reminders, and invite other participants. The system should prevent meeting room conflicts and provide a simple management interface.",
+          "reply": "Type your reply..."
+        }
+      },
+      "edit": {
+        "title": "Edit Document Content",
+        "cancel": "Cancel",
+        "save": "Save Changes",
+        "placeholder": "Edit requirement document content here..."
+      },
+      "doc": {
+        "title": "Requirement Document",
+        "edit": "Edit",
+        "updating": "Updating...",
+        "generate": "Generate Requirements Doc",
+        "checking": "Checking...",
+        "qualityCheck": "Quality Check"
+      }
+    },
+    "assistant": {
+      "title": "AI Assistant & Action Panel",
+      "subtitle": "AI Questions, Suggestions & Quality Assurance",
+      "suggestions": "AI Questions & Suggestions",
+      "quality": "Real-time Quality Assurance", 
+      "buttons": {
+        "ignore": "Ignore",
+        "accept": "Accept"
+      },
+      "alerts": {
+        "ambiguity": "Ambiguity",
+        "testability": "Testability",
+        "inconsistency": "Inconsistency",
+        "incompleteness": "Incompleteness"
+      }
+    },
+    "knowledge": {
+      "errors": {
+        "fetchGlossaryFailed": "Failed to fetch glossary",
+        "fetchGlossaryError": "Error fetching glossary:",
+        "unknownError": "Unknown error",
+        "fetchGuidelinesFailed": "Failed to fetch guidelines",
+        "fetchGuidelinesError": "Error fetching guidelines:",
+        "validateKeywordsFailed": "Failed to validate keywords"
+      }
+    }
+  }
+}

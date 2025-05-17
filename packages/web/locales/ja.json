@@ -1,0 +1,129 @@
+{
+  "nav": {
+    "cockpit": "コックピット",
+    "platform": "プラットフォーム",
+    "aihub": "AIハブ",
+    "aitools": "AIツール",
+    "metrics": "メトリクス",
+    "search": "検索",
+    "aiassistant": "AIアシスタント",
+    "brand": "AutoDev",
+    "language": "言語"
+  },
+  "home": {
+    "selected": "選択済み: {section}",
+    "userTouchpoint": "ユーザータッチポイント: AI強化セルフサービス",
+    "lowCode": "ローコードシステム、迅速なUI/プロトタイプ構築",
+    "aiTemplate": "AI駆動テンプレートアプリ、エンドユーザー製品",
+    "lowCodeEnhance": "ローコード強化生成",
+    "aiTemplateEnhance": "AI強化テンプレート生成",
+    "middleLayer": "ミドルレイヤー: 知識とコンテキストハブ",
+    "connect": "ユーザーと内部開発者を接続し、知識を集約して配布",
+    "qaDevops": "Q&A、DevOpsタスク連携のサポート",
+    "knowledgeHub": "知識とコンテキストハブ",
+    "internalApi": "内部インターフェース: コンテキストを提供する標準化API",
+    "editorApi": "エディター、コードリポジトリなどの内部APIの提供",
+    "infra": "プラットフォームインフラとデータ処理能力",
+    "standardApi": "標準化された「インテリジェントAPI」",
+    "aiGovernance": "インテリジェントエージェント管理センター",
+    "governanceStrategy": "一元管理戦略",
+    "permission": "権限管理",
+    "contextInject": "コンテキスト注入",
+    "audit": "統合監査",
+    "resource": "リソースオーケストレーション",
+    "idp": "インテリジェント管理センターとしてのIDP",
+    "aiMetrics": "AI品質と生産性の測定",
+    "modelEval": "モデル効果評価",
+    "response": "応答速度と精度",
+    "usage": "使用頻度とカバレッジ",
+    "productivity": "生産性向上指標",
+    "improve": "メトリクスによるAI生成品質の向上"
+  },
+  "section": {
+    "lowcode": "ローコード強化",
+    "aitemplate": "AI強化テンプレート生成",
+    "knowledgehub": "知識とコンテキストハブ",
+    "platformapi": "標準化された「インテリジェントAPI」",
+    "idpgovernance": "インテリジェント管理としてのIDP",
+    "metrics": "メトリクスによるAI生成品質の向上"
+  },
+
+  "cockpit": {
+    "systemPrompt1": "あなたはソフトウェア要件の分析と改善を専門とするプロフェッショナルな要件アナリストです。",
+    "systemPrompt2": "あなたの任務は、質問を通じてユーザーが要件を明確にし、その議論を構造化された要件文書にまとめることを支援することです。",
+    "systemPrompt3": "回答する際には以下が必要です：\n1. 要件のさまざまな側面についてユーザーが考えるのを助ける価値ある質問をする\n2. 会話に基づいて主要な要件ポイントを自動的に識別して抽出する\n3. プロフェッショナルでフレンドリーな態度を維持し、ユーザーが完全な要件シナリオを検討するよう導く\n",
+    "systemPrompt4": "ユーザーの要件の説明が十分に明確でない場合は、積極的に詳細を尋ねてください。",
+    "error": {
+      "aiResponseFailed": "AI応答の取得に失敗しました",
+      "aiResponseError": "AI応答の取得中にエラーが発生しました:",
+      "handleAIResponseError": "AI応答の処理中にエラーが発生しました:",
+      "qualityCheckFailed": "品質チェックAPIの呼び出しに失敗しました",
+      "qualityCheckApiError": "品質チェックAPIがエラーを返しました:",
+      "qualityCheckError": "品質チェック中にエラーが発生しました:",
+      "updateDocError": "文書の更新中にエラーが発生しました:",
+      "qualityCheckExecError": "品質チェックの実行中にエラーが発生しました:"
+    },
+    "requirements": {
+      "defaultRequirement": "モバイルから利用可能な会議室を表示し、会議スロットを予約し、会議のリマインダーを設定し、他の参加者を招待できる会議室予約システムが必要です。システムは会議室の競合を防止し、シンプルな管理インターフェースを提供する必要があります。",
+      "title": "自動開発コックピット",
+      "subtitle": "AIアシスタントと協力して要件を定義、洗練、実装する",
+      "tab": {
+        "conversation": "会話",
+        "document": "要件文書"
+      },
+      "empty": {
+        "conversation1": "会話を開始するには、以下に要件の説明を入力してください",
+        "conversation2": "ヒント: 要件を説明するには、明確で具体的な言語を使用してください",
+        "document1": "まだ要件文書はありません",
+        "document2": "作成するには会話で「要件文書を生成」ボタンをクリックしてください"
+      },
+      "input": {
+        "tip": "あなたの中心的な要件や意図を説明してください",
+        "placeholder": {
+          "example": "例: モバイルから利用可能な会議室を表示し、会議スロットを予約し、会議のリマインダーを設定し、他の参加者を招待できる会議室予約システムが必要です。システムは会議室の競合を防止し、シンプルな管理インターフェースを提供する必要があります。",
+          "reply": "返信を入力..."
+        }
+      },
+      "edit": {
+        "title": "文書内容の編集",
+        "cancel": "キャンセル",
+        "save": "変更を保存",
+        "placeholder": "ここで要件文書の内容を編集してください..."
+      },
+      "doc": {
+        "title": "要件文書",
+        "edit": "編集",
+        "updating": "更新中...",
+        "generate": "要件文書を生成",
+        "checking": "チェック中...",
+        "qualityCheck": "品質チェック"
+      }
+    },
+    "assistant": {
+      "title": "AIアシスタントとアクションパネル",
+      "subtitle": "AI質問、提案と品質保証",
+      "suggestions": "AI質問と提案",
+      "quality": "リアルタイム品質保証", 
+      "buttons": {
+        "ignore": "無視",
+        "accept": "受け入れる"
+      },
+      "alerts": {
+        "ambiguity": "曖昧さ",
+        "testability": "テスト可能性",
+        "inconsistency": "不整合",
+        "incompleteness": "不完全性"
+      }
+    },
+    "knowledge": {
+      "errors": {
+        "fetchGlossaryFailed": "用語集の取得に失敗しました",
+        "fetchGlossaryError": "用語集の取得中にエラーが発生しました:",
+        "unknownError": "不明なエラー",
+        "fetchGuidelinesFailed": "ガイドラインの取得に失敗しました",
+        "fetchGuidelinesError": "ガイドラインの取得中にエラーが発生しました:",
+        "validateKeywordsFailed": "キーワードの検証に失敗しました"
+      }
+    }
+  }
+}

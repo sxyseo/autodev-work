@@ -1,0 +1,38 @@
+'use client';
+
+import { ReactNode } from 'react';
+import { Inter } from 'next/font/google';
+import "@/app/globals.css"
+import { useParams } from 'next/navigation';
+import { locales, defaultLocale } from '../../../i18n';
+import { ClientLocaleLayout } from '@/components/layouts/ClientLocaleLayout';
+
+const inter = Inter({ subsets: ['latin'] });
+
+// 预渲染所有支持的语言路径
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export default function LocaleLayout({
+  children
+}: {
+  children: ReactNode;
+}) {
+  // 使用 useParams() 在客户端安全地获取 locale 参数
+  const params = useParams();
+  const localeParam = typeof params.locale === 'string' ? params.locale : defaultLocale;
+  
+  // 确保语言代码有效
+  const locale = locales.includes(localeParam) ? localeParam : defaultLocale;
+  
+  return (
+    <html lang={locale}>
+      <body className={inter.className}>
+        <ClientLocaleLayout locale={locale}>
+          {children}
+        </ClientLocaleLayout>
+      </body>
+    </html>
+  );
+} 
